@@ -20,6 +20,9 @@ function App() {
   const resultOffset = musicContext.resultOffset;
   const setResultOffset = musicContext.setResultOffset;
 
+  const apiKey = process.env.REACT_APP_SPOTIFY_KEY
+  const apiSecret = process.env.REACT_APP_SPOTIFY_SECRET
+
   const fetchMusicData = async () => {
     setTracks([]);
     window.scrollTo(0, 0);
@@ -66,7 +69,7 @@ function App() {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
-          body: "grant_type=client_credentials&client_id=a94b5327623b4c2cb2a6a1d1db806c56&client_secret=fb66df0060d54569912c5c58648f4ae2",
+          body: `grant_type=client_credentials&client_id=${apiKey}&client_secret=${apiSecret}`,
         });
 
         if (!response.ok) {
@@ -84,6 +87,7 @@ function App() {
     fetchToken();
     setLikedMusic(JSON.parse(localStorage.getItem("likedMusic")));
     setpinnedMusic(JSON.parse(localStorage.getItem("pinnedMusic")));
+    // eslint-disable-next-line
   }, [setIsLoading, setLikedMusic, setpinnedMusic]);
 
   return (
